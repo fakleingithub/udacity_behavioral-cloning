@@ -98,7 +98,7 @@ X_train = np.array(images)
 y_train = np.array(measurements)
 
 from keras.models import Sequential 
-from keras.layers import Flatten, Dense, Lambda, Cropping2D
+from keras.layers import Flatten, Dense, Lambda, Cropping2D, Dropout
 from keras.layers.convolutional import Convolution2D
 
 #model architecture of NVIDIA autonomous team End-to-End Deep Learning for Self-Driving Cars
@@ -110,13 +110,14 @@ model.add(Lambda(lambda x: x / 255.0 - 0.5, input_shape=(160,320,3)))
 
 #crop out top of image because the sky etc. is not relevant for training the model
 model.add(Cropping2D(cropping=((70,25),(0,0))))
-
 model.add(Convolution2D(24,5,5,subsample=(2,2),activation="relu"))
 model.add(Convolution2D(36,5,5,subsample=(2,2),activation="relu"))
 model.add(Convolution2D(48,5,5,subsample=(2,2),activation="relu"))
 model.add(Convolution2D(64,3,3,activation="relu"))
 model.add(Convolution2D(64,3,3,activation="relu"))
 model.add(Flatten())
+#dropout-rate of 40% (probability of setting outputs from last hidden layer to zero)
+model.add(Dropout(0.4))
 model.add(Dense(100))
 model.add(Dense(50))
 model.add(Dense(10))

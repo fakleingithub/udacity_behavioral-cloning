@@ -52,6 +52,9 @@ The network consists of a normalization layer, followed by 5 convolutional layer
 
 #### 2. Attempts to reduce overfitting in the model
 
+I included a Dropout layer with a probability of 40% (probability of setting outputs from last hidden layer to zero)
+ before the first Dense layer.
+
 The model was trained and validated on different data sets to ensure that the model was not overfitting.
 Additionally to the provided data set, I recorded two rounds on the standard track (one clockwise and one counter-clockwise)
 and one round on the jungle track. I used these recorded data for my model training.
